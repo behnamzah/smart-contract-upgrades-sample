@@ -25,8 +25,6 @@ const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL || "https://rinkeby.infura.i
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 
-console.log("PRIVATE_KEY", PRIVATE_KEY);
-
 module.exports = {
   defaultNetwork: "hardhat",
   solidity: "0.8.2",
