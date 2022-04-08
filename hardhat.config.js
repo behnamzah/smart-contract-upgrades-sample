@@ -1,5 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
-require("@openzeppelin/hardhat-upgrades")
+require("@nomiclabs/hardhat-ethers");
+require("@openzeppelin/hardhat-upgrades");
+require("@nomiclabs/hardhat-etherscan");
+require('dotenv').config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -17,15 +20,37 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
+const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL || "https://rinkeby.infura.io/v3/your-api-key";
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
+
+console.log("PRIVATE_KEY", PRIVATE_KEY);
+
 module.exports = {
+  defaultNetwork: "hardhat",
   solidity: "0.8.2",
   networks: {
     hardhat:{},
-    local: {
+    localhost: {
       url: "http://127.0.0.1:8545/"
     },
-    // rinkeby:{
-      
-    // }
-  }
+    rinkeby: {
+      url: RINKEBY_RPC_URL,
+      accounts: [PRIVATE_KEY],
+      saveDeployments: true,
+    },
+  },
+  namedAccounts: {
+    deployer:{
+      default: 0,
+      1: 0
+    },
+    collector: {
+      default: 1
+    }
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY
+  },
 };
